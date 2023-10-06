@@ -29,15 +29,15 @@ define Package/mqttbroker
   TITLE:=A very lightweight MQTT-Integration System
   URL:=https://github.com/VolkerChristian/mqttbroker
   DEPENDS:=+snode.c \
-	+snode.c-net-in-stream-legacy \
-	+snode.c-net-in-stream-tls \
-	+snode.c-net-un-stream-legacy \
-	+snode.c-http-server-express \
-	+snode.c-http-client \
-	+snode.c-websocket-server \
-	+snode.c-websocket-client \
-	+snode.c-mqtt-server-websocket \
-	+snode.c-mqtt-client-websocket
+           +snode.c-net-in-stream-legacy \
+           +snode.c-net-in-stream-tls \
+           +snode.c-net-un-stream-legacy \
+           +snode.c-http-server-express \
+           +snode.c-http-client \
+           +snode.c-websocket-server \
+           +snode.c-websocket-client \
+           +snode.c-mqtt-server-websocket \
+           +snode.c-mqtt-client-websocket
 endef
 
 define Package/mqttbroker/description
