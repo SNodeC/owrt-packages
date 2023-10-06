@@ -5,11 +5,9 @@ PKG_VERSION:=0.90
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/VolkerChristian/snode.c/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=df7e4b2c10675d161a5e8a676012db582ac100aaeb99baa06d033842fa775a36
-
-# PKG_SOURCE_URL:=https://api.github.com/repos/VolkerChristian/snode.c/tarball/v$(PKG_VERSION)?
-# PKG_HASH:=3bf820675fe282adf865a38c9e5cbe5f39680138a7bd6cf1b41632c45fd17b69
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/VolkerChristian/snode.c.git
+PKG_SOURCE_VERSION:=HEAD
 
 PKG_MAINTAINER:=Volker Christian <me@vchrist.at>
 PKG_LICENSE:=LGPL-3.0-or-later

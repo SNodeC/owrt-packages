@@ -7,9 +7,7 @@ PKG_RELEASE:=1
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/VolkerChristian/mqttbroker.git
-#PKG_SOURCE_VERSION:=ca59421e796d4bb56d92062a01c30967f15fd7d6
-#PKG_SOURCE_VERSION:=HEAD
-PKG_SOURCE_VERSION:=snode.c-0.90
+PKG_SOURCE_VERSION:=HEAD
 
 PKG_MAINTAINER:=Volker Christian <me@vchrist.at>
 
