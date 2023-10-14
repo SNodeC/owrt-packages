@@ -335,7 +335,7 @@ menu "Configuration"
 			prompt "SSL/TLS teardown timeout in seconds"
 			default 2
 			help
-					Maximum duration of SSL/TLS shutdown before a connection is terminated.
+					Maximum duration of SSL/TLS shutdown before a connection is aborted.
 					(default: 2)
 
 					https://github.com/VolkerChristian/snode.c
