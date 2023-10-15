@@ -5,10 +5,10 @@ PKG_VERSION:=0.90
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://codeload.github.com/VolkerChristian/snode.c/tar.gz/v$(PKG_VERSION)?
+PKG_SOURCE_URL:=https://codeload.github.com/SNodeC/snode.c/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=8c723d7ed3ee345367b4ecf62920d7155e642e634c26f797d1172e359de05214
 
-# PKG_SOURCE_URL:=https://api.github.com/repos/VolkerChristian/snode.c/tarball/v$(PKG_VERSION)?
+# PKG_SOURCE_URL:=https://api.github.com/repos/SNodeC/snode.c/tarball/v$(PKG_VERSION)?
 # PKG_HASH:=6fde2b47494c868fc6255dcfaa19e75d03c04032c6a7da445feef9bcde771745
 
 PKG_MAINTAINER:=Volker Christian <me@vchrist.at>
