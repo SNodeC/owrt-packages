@@ -27,7 +27,7 @@ ifdef CONFIG_SNODEC_EPOLL
   CONFIG_SNODEC_IO_MULTIPLEXER=epoll
 else ifdef CONFIG_SNODEC_POLL
   CONFIG_SNODEC_IO_MULTIPLEXER=poll
-else # CONFIG_SNODEC_SELECT
+else ifdef CONFIG_SNODEC_SELECT
   CONFIG_SNODEC_IO_MULTIPLEXER=select
 endif
 
@@ -144,26 +144,26 @@ define Package/snode.c-full
   $(call Package/snode.c/Default)
   TITLE:=install all modules (no apps)
   DEPENDS:=+snode.c-core-mux-epoll \
-	+snode.c-core-mux-poll \
-	+snode.c-core-mux-select \
-	+snode.c-net-in-stream-legacy \
-	+snode.c-net-in-stream-tls \
-	+snode.c-net-in6-stream-legacy \
-	+snode.c-net-in6-stream-tls \
-	+snode.c-net-l2-stream-legacy \
-	+snode.c-net-l2-stream-tls \
-	+snode.c-net-rc-stream-legacy \
-	+snode.c-net-rc-stream-tls \
-	+snode.c-net-un-stream-legacy \
-	+snode.c-net-un-stream-tls \
-	+snode.c-net-un-dgram \
-	+snode.c-http-server-express \
-	+snode.c-http-client \
-	+snode.c-websocket-server \
-	+snode.c-websocket-client \
-	+snode.c-mqtt-server-websocket \
-	+snode.c-mqtt-client-websocket \
-	+snode.c-db-mariadb
+           +snode.c-core-mux-poll \
+           +snode.c-core-mux-select \
+           +snode.c-net-in-stream-legacy \
+           +snode.c-net-in-stream-tls \
+           +snode.c-net-in6-stream-legacy \
+           +snode.c-net-in6-stream-tls \
+           +snode.c-net-l2-stream-legacy \
+           +snode.c-net-l2-stream-tls \
+           +snode.c-net-rc-stream-legacy \
+           +snode.c-net-rc-stream-tls \
+           +snode.c-net-un-stream-legacy \
+           +snode.c-net-un-stream-tls \
+           +snode.c-net-un-dgram \
+           +snode.c-http-server-express \
+           +snode.c-http-client \
+           +snode.c-websocket-server \
+           +snode.c-websocket-client \
+           +snode.c-mqtt-server-websocket \
+           +snode.c-mqtt-client-websocket \
+           +snode.c-db-mariadb
 endef
 
 define Package/snode.c-full/description
@@ -180,22 +180,22 @@ define Package/snode.c-apps
   $(call Package/snode.c/Default)
   TITLE:=SNode.C demo applications
   DEPENDS:=+snode.c-net-in-stream-legacy \
-	+snode.c-net-in-stream-tls \
-	+snode.c-net-in6-stream-legacy \
-	+snode.c-net-in6-stream-tls \
-	+snode.c-net-l2-stream-legacy \
-	+snode.c-net-l2-stream-tls \
-	+snode.c-net-rc-stream-legacy \
-	+snode.c-net-rc-stream-tls \
-	+snode.c-net-un-stream-legacy \
-	+snode.c-net-un-stream-tls \
-	+snode.c-http-server-express \
-	+snode.c-http-client \
-	+snode.c-websocket-server \
-	+snode.c-websocket-client \
-	+snode.c-mqtt-server \
-	+snode.c-mqtt-client \
-	+snode.c-db-mariadb
+           +snode.c-net-in-stream-tls \
+           +snode.c-net-in6-stream-legacy \
+           +snode.c-net-in6-stream-tls \
+           +snode.c-net-l2-stream-legacy \
+           +snode.c-net-l2-stream-tls \
+           +snode.c-net-rc-stream-legacy \
+           +snode.c-net-rc-stream-tls \
+           +snode.c-net-un-stream-legacy \
+           +snode.c-net-un-stream-tls \
+           +snode.c-http-server-express \
+           +snode.c-http-client \
+           +snode.c-websocket-server \
+           +snode.c-websocket-client \
+           +snode.c-mqtt-server \
+           +snode.c-mqtt-client \
+           +snode.c-db-mariadb
 endef
 
 define Package/snode.c-apps/description
@@ -211,6 +211,10 @@ define Package/snode.c-apps/install
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so.$(SO_VERSION) $(1)/usr/lib/snode.c/web/http/upgrade/websocket/
 endef
 
+ifdef CONFIG_SNODEC_IO_MULTIPLEXER
+  CONFIG_SNODEC_IO_MULTIPLEXER_DEPENDENCY=+snode.c-core-mux-$(CONFIG_SNODEC_IO_MULTIPLEXER)
+endif
+
 $(eval $(call BuildPackage,snode.c))
 $(eval $(call BuildPackage,snode.c-apps))
 $(eval $(call BuildPackage,snode.c-full))
@@ -219,32 +223,42 @@ $(eval $(call BuildSNodeCModule,utils,+snode.c-logger,/usr/lib))
 $(eval $(call BuildSNodeCModule,core-mux-epoll,+snode.c-logger,/usr/lib))
 $(eval $(call BuildSNodeCModule,core-mux-poll,+snode.c-logger,/usr/lib))
 $(eval $(call BuildSNodeCModule,core-mux-select,+snode.c-logger,/usr/lib))
-$(eval $(call BuildSNodeCModule,core,+snode.c-utils +snode.c-core-mux-$(CONFIG_SNODEC_IO_MULTIPLEXER),/usr/lib))
+$(eval $(call BuildSNodeCModule,core,+snode.c-utils $(CONFIG_SNODEC_IO_MULTIPLEXER_DEPENDENCY),/usr/lib))
 $(eval $(call BuildSNodeCModule,core-socket,+snode.c-core,/usr/lib))
 $(eval $(call BuildSNodeCModule,core-socket-stream,+snode.c-core-socket,/usr/lib))
 $(eval $(call BuildSNodeCModule,core-socket-stream-legacy,+snode.c-core-socket-stream,/usr/lib))
 $(eval $(call BuildSNodeCModule,core-socket-stream-tls,+snode.c-core-socket-stream +libopenssl,/usr/lib))
 $(eval $(call BuildSNodeCModule,db-mariadb,+snode.c-core +libmariadb,/usr/lib))
-$(eval $(call BuildSNodeCModule,net,+snode.c-core,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-in,+snode.c-net +snode.c-core-socket,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-in6,+snode.c-net +snode.c-core-socket,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-l2,+snode.c-net +snode.c-core-socket +bluez-libs,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-rc,+snode.c-net +snode.c-core-socket +bluez-libs,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-un,+snode.c-net +snode.c-core-socket,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-in-stream,+snode.c-net-in +snode.c-core-socket-stream,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-in6-stream,+snode.c-net-in6 +snode.c-core-socket-stream,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-l2-stream,+snode.c-net-l2 +snode.c-core-socket-stream,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-rc-stream,+snode.c-net-rc +snode.c-core-socket-stream,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-un-stream,+snode.c-net-un +snode.c-core-socket-stream,/usr/lib))
+$(eval $(call BuildSNodeCModule,net,+snode.c-utils,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-in,+snode.c-net,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-in-phy,+snode.c-net-in,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-in-phy-stream,+snode.c-net-in-phy,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-in-stream,+snode.c-net-in-phy-stream,/usr/lib))
 $(eval $(call BuildSNodeCModule,net-in-stream-legacy,+snode.c-net-in-stream +snode.c-core-socket-stream-legacy,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-in6-stream-legacy,+snode.c-net-in6-stream +snode.c-core-socket-stream-legacy,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-l2-stream-legacy,+snode.c-net-l2-stream +snode.c-core-socket-stream-legacy,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-rc-stream-legacy,+snode.c-net-rc-stream +snode.c-core-socket-stream-legacy,/usr/lib))
-$(eval $(call BuildSNodeCModule,net-un-stream-legacy,+snode.c-net-un-stream +snode.c-core-socket-stream-legacy,/usr/lib))
 $(eval $(call BuildSNodeCModule,net-in-stream-tls,+snode.c-net-in-stream +snode.c-core-socket-stream-tls,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-in6,+snode.c-net,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-in6-phy,+snode.c-net-in6,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-in6-phy-stream,+snode.c-net-in6-phy,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-in6-stream,+snode.c-net-in6-phy-stream,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-in6-stream-legacy,+snode.c-net-in6-stream +snode.c-core-socket-stream-legacy,/usr/lib))
 $(eval $(call BuildSNodeCModule,net-in6-stream-tls,+snode.c-net-in6-stream +snode.c-core-socket-stream-tls,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-l2,+snode.c-net,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-l2-phy,+snode.c-net-l2 +bluez-libs,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-l2-phy-stream,+snode.c-net-l2-phy,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-l2-stream,+snode.c-net-l2-phy-stream,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-l2-stream-legacy,+snode.c-net-l2-stream +snode.c-core-socket-stream-legacy,/usr/lib))
 $(eval $(call BuildSNodeCModule,net-l2-stream-tls,+snode.c-net-l2-stream +snode.c-core-socket-stream-tls,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-rc,+snode.c-net,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-rc-phy,+snode.c-net-rc +bluez-libs,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-rc-phy-stream,+snode.c-net-rc-phy,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-rc-stream,+snode.c-net-rc-phy-stream,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-rc-stream-legacy,+snode.c-net-rc-stream +snode.c-core-socket-stream-legacy,/usr/lib))
 $(eval $(call BuildSNodeCModule,net-rc-stream-tls,+snode.c-net-rc-stream +snode.c-core-socket-stream-tls,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-un,+snode.c-net,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-un-phy,+snode.c-net-un,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-un-phy-stream,+snode.c-net-un-phy,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-un-stream,+snode.c-net-un-phy-stream,/usr/lib))
+$(eval $(call BuildSNodeCModule,net-un-stream-legacy,+snode.c-net-un-stream +snode.c-core-socket-stream-legacy,/usr/lib))
 $(eval $(call BuildSNodeCModule,net-un-stream-tls,+snode.c-net-un-stream +snode.c-core-socket-stream-tls,/usr/lib))
 $(eval $(call BuildSNodeCModule,net-un-dgram,+snode.c-net-un,/usr/lib))
 $(eval $(call BuildSNodeCModule,http,+snode.c-core-socket-stream +libmagic,/usr/lib/snode.c/web/http))
