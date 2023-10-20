@@ -6,10 +6,10 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/SNodeC/snode.c/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=bfdc48289f9cbc34ee7480c2a499bb4f5197a96c555d7778dd9881d379a42332
+PKG_HASH:=49c3629f302e7760edf08430c1d6787c181a835b1db136c2dcc30a68186134c7
 
 # PKG_SOURCE_URL:=https://api.github.com/repos/SNodeC/snode.c/tarball/v$(PKG_VERSION)?
-# PKG_HASH:=f1e478d2c86a00f6c1bda16e5e34dbc8b8983059156015d8b6243677c5bcde37
+# PKG_HASH:=446e470b5f33291e75078d775308bc0efdd184b07e93d6a4f18022bb5afd60b1
 
 PKG_MAINTAINER:=Volker Christian <me@vchrist.at>
 PKG_LICENSE:=LGPL-3.0-or-later
