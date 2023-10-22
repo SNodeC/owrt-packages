@@ -29,7 +29,8 @@ else ifdef CONFIG_SNODEC_SELECT
   CONFIG_SNODEC_IO_MULTIPLEXER=select
 endif
 
-CMAKE_OPTIONS+=-DIO_MULTIPLEXER=$(CONFIG_SNODEC_IO_MULTIPLEXER) \
+CMAKE_OPTIONS+=-DGROUP_NAME=$(patsubst "%",%,$(CONFIG_SNODEC_GROUP_NAME)) \
+               -DIO_MULTIPLEXER=$(CONFIG_SNODEC_IO_MULTIPLEXER) \
                -DREAD_BLOCKSIZE=$(CONFIG_SNODEC_READ_BLOCKSIZE) \
                -DWRITE_BLOCKSIZE=$(CONFIG_SNODEC_WRITE_BLOCKSIZE) \
                -DREAD_TIMEOUT=$(CONFIG_SNODEC_READ_TIMEOUT) \
@@ -60,14 +61,13 @@ define Package/snode.c/Default
   SECTION:=net
   CATEGORY:=Network
   SUBMENU:=SNode.C
-  URL:=https://github.com/VolkerChristian/snode.c
-  Maintainer:=Volker Christian <me@vchrist.at>
 endef
 
 define Package/snode.c
   $(call Package/snode.c/Default)
   TITLE:=Easy to use lightwight layer based network framework for C++
   DEPENDS:=+libstdcpp
+  USERID:=$(patsubst "%",%,$(CONFIG_SNODEC_GROUP_NAME)):$(patsubst "%",%,$(CONFIG_SNODEC_GROUP_NAME))
 endef
 
 define Package/snode.c/description
@@ -83,37 +83,6 @@ endef
 
 define Package/snode.c/install
 	true
-endef
-
-SNODEC_GROUP_NAME=snodec
-SNODEC_GROUP_ID=$(call qstrip,$(CONFIG_SNODEC_GROUP_ID))
-
-define Package/snode.c/postinst
-#!/bin/sh
-
-GROUP_NAME=$(SNODEC_GROUP_NAME)
-GROUP_ID=$(SNODEC_GROUP_ID)
-
-if [ -z $$(grep "^$${GROUP_NAME}:" $${IPKG_INSTROOT}/etc/group) ]; then
-	echo "Adding group '$${GROUP_NAME}' with ID $${GROUP_ID} to /etc/group and assign user root to it"
-	echo "$${GROUP_NAME}:x:$${GROUP_ID}:root" >> $${IPKG_INSTROOT}/etc/group
-else
-	echo "Adding group '$${GROUP_NAME}' to /etc/group failed: group exists"
-fi
-endef
-
-define Package/snode.c/prerm
-#!/bin/sh
-
-GROUP_NAME=$(SNODEC_GROUP_NAME)
-GROUP_ID=$(SNODEC_GROUP_ID)
-
-if [ ! -z $$(grep "^$${GROUP_NAME}:.*:$${GROUP_ID}" $${IPKG_INSTROOT}/etc/group) ]; then
-	echo "Removing group '$${GROUP_NAME}' from /etc/group"
-	sed -i "/^$${GROUP_NAME}:/d" /etc/group
-else
-	echo "Removing group '$${GROUP_NAME}' from /etc/group failed: no such group"
-fi
 endef
 
 SO_VERSION=$(shell echo $(PKG_VERSION) | cut -d'.' -f1)
@@ -210,7 +179,7 @@ define Package/snode.c-apps/install
 endef
 
 ifdef CONFIG_SNODEC_IO_MULTIPLEXER
-  CONFIG_SNODEC_IO_MULTIPLEXER_DEPENDENCY=+snode.c-core-mux-$(CONFIG_SNODEC_IO_MULTIPLEXER)
+  CONFIG_SNODEC_IO_MULTIPLEXER_DEPENDENCY:=+snode.c-core-mux-$(CONFIG_SNODEC_IO_MULTIPLEXER)
 endif
 
 $(eval $(call BuildPackage,snode.c))
