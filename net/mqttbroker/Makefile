@@ -84,10 +84,13 @@ define Package/mqttbroker/install
 	$(CP) $(PKG_INSTALL_DIR)/usr/bin/* $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/* $(1)/usr/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/* $(1)/usr/lib/
+	find $(1)/usr/lib -name "*.so"  -exec rm {} ";"
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libmqtt-mapping-plugin-storage.so $(1)/usr/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libmqtt-mapping-plugin-double.so $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/mqttbroker.init $(1)/etc/init.d/mqttbroker
 	$(INSTALL_BIN) ./files/wsmqttintegrator.init $(1)/etc/init.d/wsmqttintegrator
-	find $(1)/usr/lib -name "*.so"  -exec rm {} ";"
 	$(call strip_staging_dir_prefix_from_rpath,$(1)/usr)
 endef
 
