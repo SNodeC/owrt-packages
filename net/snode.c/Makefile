@@ -101,7 +101,7 @@ define BuildSNodeCModule
   
   define Package/snode.c-$(1)/install
 	$(INSTALL_DIR) $$(1)$(3)
-	$(CP) $(PKG_INSTALL_DIR)$(3)/libsnodec-$(1).so.$(SO_VERSION) $$(1)$(3)/ 2> /dev/null || true
+	$(CP) $(PKG_INSTALL_DIR)$(3)/libsnodec-$(1).so.$(SO_VERSION) $$(1)$(3)/
   endef
 
   $$(eval $$(call BuildPackage,snode.c-$(1)))
