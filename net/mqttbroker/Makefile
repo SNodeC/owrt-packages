@@ -29,7 +29,14 @@ define Package/mqttbroker
   DEPENDS:=+snode.c \
            +snode.c-net-in-stream-legacy \
            +snode.c-net-in-stream-tls \
+           +snode.c-net-in6-stream-legacy \
+           +snode.c-net-in6-stream-tls \
+           +snode.c-net-l2-stream-legacy \
+           +snode.c-net-l2-stream-tls \
+           +snode.c-net-rc-stream-legacy \
+           +snode.c-net-rc-stream-tls \
            +snode.c-net-un-stream-legacy \
+           +snode.c-net-un-stream-tls \
            +snode.c-http-server-express \
            +snode.c-http-client \
            +snode.c-websocket-server \
