@@ -101,4 +101,4 @@ define Package/mqttsuite/install
 	$(call strip_staging_dir_prefix_from_rpath,$(1)/usr)
 endef
 
-$(eval $(call BuildPackage,mqttbroker))
+$(eval $(call BuildPackage,mqttsuite))
