@@ -1,12 +1,12 @@
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=mqttbroker
+PKG_NAME:=mqttsuite
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/VolkerChristian/mqttbroker.git
+PKG_SOURCE_URL:=https://github.com/VolkerChristian/mqttsuite.git
 PKG_SOURCE_VERSION:=HEAD
 
 PKG_MAINTAINER:=Volker Christian <me@vchrist.at>
@@ -21,11 +21,11 @@ CMAKE_INSTALL:=1
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
-define Package/mqttbroker
+define Package/mqttsuite
   SECTION:=net
   CATEGORY:=Network
   TITLE:=A very lightweight MQTT-Integration System
-  URL:=https://github.com/VolkerChristian/mqttbroker
+  URL:=https://github.com/SNodeC/mqttsuite
   DEPENDS:=+snode.c \
            +snode.c-net-in-stream-legacy \
            +snode.c-net-in-stream-tls \
@@ -45,12 +45,13 @@ define Package/mqttbroker
            +snode.c-mqtt-client-websocket
 endef
 
-define Package/mqttbroker/description
-  The MQTT-Broker project consist of three applications mqttbroker,
-  mqttintegrator and wsmqttintegrator powered by SNode.C, a single
-  threaded, single tasking framework for networking applications
-  written entirely in C++. Due to it's little resource usage it is
-  especially usable on resource limited systems.
+define Package/mqttsuite/description
+  The MQTT-Suite project consist of the applications mqttbroker,
+  mqttintegrator, wsmqttintegrator, mqttbridge and wsmqttbridge
+  powered by SNode.C, a single threaded, single tasking framework
+  for networking applications written entirely in C++. Due to
+  it's little resource usage it is especially usable on resource
+  limited systems.
 endef
 
 define strip_staging_dir_prefix_from_rpath
@@ -86,7 +87,7 @@ define strip_staging_dir_prefix_from_rpath
 	echo "Stripping done"
 endef
 
-define Package/mqttbroker/install
+define Package/mqttsuite/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(CP) $(PKG_INSTALL_DIR)/usr/bin/* $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/usr/lib
