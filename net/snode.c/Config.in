@@ -153,8 +153,18 @@ menu "Configuration"
 					Retry *connect* in case the connection to the peer could not be established.
 					(default: n)
 
+		config SNODEC_RETRY_ON_FATAL
+			depends on SNODEC_RETRY
+			bool
+			default n
+			prompt "Retry also on fatal error"
+			help
+					By default connect and listen are not retried in case a fatal error has
+					occured. This flag overrides this behaviour.
+					(default: n)
+
 		config SNODEC_RETRY_TIMEOUT
-		    depends on SNODEC_RETRY
+			depends on SNODEC_RETRY
 			int
 			default 1
 			prompt "Retry interval in seconds"
@@ -164,7 +174,7 @@ menu "Configuration"
 					(default: 1)
 
 		config SNODEC_RETRY_TRIES
-		    depends on SNODEC_RETRY
+			depends on SNODEC_RETRY
 			int
 			default 0
 			prompt "Upper limit of retry tries"
@@ -173,7 +183,7 @@ menu "Configuration"
 					(default: 0, 0 = unlimited)
 
 		config SNODEC_RETRY_BASE
-		    depends on SNODEC_RETRY
+			depends on SNODEC_RETRY
 			string
 			default "1.8"
 			prompt "Base of exponential increase"
@@ -182,7 +192,7 @@ menu "Configuration"
 					(default: 1.8)
 
 		config SNODEC_RETRY_JITTER
-		    depends on SNODEC_RETRY
+			depends on SNODEC_RETRY
 			int
 			default 0
 			prompt "Jitter of retry timeout in percent"
@@ -191,7 +201,7 @@ menu "Configuration"
 					(default: 0, 0 = disable)
 
 		config SNODEC_RETRY_LIMIT
-		    depends on SNODEC_RETRY
+			depends on SNODEC_RETRY
 			int
 			default 0
 			prompt "Upper limit of retry timeout in seconds"
