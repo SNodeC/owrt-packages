@@ -266,4 +266,16 @@ menu "Configuration"
 					Maximum duration of the SSL/TLS shutdown before a connection is aborted.
 					(default: 2)
 	endmenu
+
+	menu "HTTP client behaviour"
+		depends on PACKAGE_snode.c-http-client
+
+		config SNODEC_HTTP_REQUEST_PIPELINED
+			bool
+			default y
+			prompt "Pipelined requests"
+			help
+					If selected http client pipelining for client requests is enabled.
+
+	endmenu
 endmenu
