@@ -245,6 +245,42 @@ menu "Configuration"
 			help
 					If selected, domain names can also be resolved to IPv4-mapped IPv6 addresses.
 					(default: n)
+
+		config SNODEC_IPV4_NUMERIC
+			depends on PACKAGE_snode.c-net-in
+			bool
+			default n
+			prompt "Accept numeric IPv4 hostnames only"
+			help
+					If selected host names must be represented as numeric IPv4 addresses.
+					(default: n)
+
+		config SNODEC_IPV4_NUMERIC_REVERSE
+			depends on PACKAGE_snode.c-net-in
+			bool
+			default n
+			prompt "Numeric IPv4 reverse lookup"
+			help
+					If selected reverse lookups yields to numeric IPv4 addresses.
+					(default: n)
+
+		config SNODEC_IPV6_NUMERIC
+			depends on PACKAGE_snode.c-net-in6
+			bool
+			default n
+			prompt "Accept numeric IPv6 hostnames only"
+			help
+					If selected reverse lookups yields to numeric IPv6 addresses.
+					(default: n)
+
+		config SNODEC_IPV6_NUMERIC_REVERSE
+			depends on PACKAGE_snode.c-net-in6
+			bool
+			default n
+			prompt "Numeric IPv6 reverse lookup"
+			help
+					If selected host names must be represented as numeric IPv6 addresses.
+					(default: n)
 	endmenu
 
 	menu "SSL/TLS behavior"
