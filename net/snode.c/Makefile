@@ -6,7 +6,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/VolkerChristian/snode.c.git
+PKG_SOURCE_URL:=https://github.com/SNodeC/snode.c.git
 PKG_SOURCE_VERSION:=HEAD
 
 PKG_MAINTAINER:=Volker Christian <me@vchrist.at>
