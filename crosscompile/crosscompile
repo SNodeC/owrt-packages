@@ -1,0 +1,26 @@
+#!/bin/sh
+# set -x
+
+if ! grep -qFm1 SNodeC feeds.conf.default; then
+#	echo "src-git snodec https://github.com/SNodeC/owrt-packages.git;vopenwrt-23.05" >> feeds.conf.default
+	echo "src-git snodec https://github.com/SNodeC/owrt-packages.git;vopenwrt-23.05-HEAD" >> feeds.conf.default
+
+	cp ../key-build* .
+
+	make defconfig
+fi
+
+rm -f dl/snode.c*.tar.gz
+rm -f dl/mqttsuite*.tar.gz
+
+./scripts/feeds update base snodec                             # Only the feeds base, packages, and snodec are necessary
+./scripts/feeds install mqttsuite
+
+make -j $(($(nproc)+1)) package/mqttsuite/compile
+make -j $(($(nproc)+1)) package/index
+
+target_dir=$(ls -d "bin/packages/"* | sed 's|bin/packages/||')
+
+ssh root@proliant "mkdir -p /var/www/html/owrt/packages/$target_dir/"
+ssh root@proliant "rm /var/www/html/owrt/packages/$target_dir/*"
+scp bin/packages/$target_dir/snodec/* "root@proliant:/var/www/html/owrt/packages/$target_dir/"

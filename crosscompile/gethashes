@@ -1,0 +1,19 @@
+#!/bin/sh
+
+echo "################################## SNODEC ##################################"
+rm v0.9*
+wget https://codeload.github.com/SNodeC/snode.c/tar.gz/v0.90
+sha256sum v0.90
+rm v0.9*
+wget https://api.github.com/repos/SNodeC/snode.c/tarball/v0.90
+sha256sum v0.90
+rm v0.9*
+
+echo "################################ MTTTBROKER ################################"
+rm vsnodec-0.9*
+wget https://codeload.github.com/SNodeC/mqttbroker/tar.gz/vsnodec-0.90
+sha256sum vsnodec-0.90
+rm vsnodec-0.9*
+wget https://api.github.com/repos/SNodeC/mqttbroker/tarball/vsnodec-0.90
+sha256sum vsnodec-0.90
+rm vsnodec-0.9*
